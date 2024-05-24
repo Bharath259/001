@@ -22,7 +22,7 @@ async function gsrun(cl) {
   const gsapi = google.sheets({ version: 'v4', auth: cl });
   const opt = {
     // Replace with your actual spreadsheet ID
-    spreadsheetId: '1vaSaQd5wPhDfSk-YxBuhCJwjRwiMIWmsDznUvkwAaKE', 
+    spreadsheetId: 'https://docs.google.com/spreadsheets/d/1vaSaQd5wPhDfSk-YxBuhCJwjRwiMIWmsDznUvkwAaKE/edit#gid=0', 
     range: 'Sheet1!A2:F2'
   };
 
