@@ -1,5 +1,5 @@
 function doGet(request) {
-  return HtmlService.createTemplateFromFile('index.html').evaluate();
+  return HtmlService.createTemplateFromFile('Index').evaluate();
 }
 
 function include(filename) {
@@ -7,7 +7,7 @@ function include(filename) {
 }
 
 function processForm(formObject) {
-  var url = "https://docs.google.com/spreadsheets/d/1vaSaQd5wPhDfSk-YxBuhCJwjRwiMIWmsDznUvkwAaKE/edit#gid=0";
+  var url = "https://docs.google.com/spreadsheets/d/1_Z--xoeNg6ePhMd_NcV4DVjBi5n4Rnx3b87yT4Pln4Q/edit#gid=0";
   var ss = SpreadsheetApp.openByUrl(url);
   var ws = ss.getSheetByName("Sheet1");
   
