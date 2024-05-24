@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Expenses Bar Graph</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-  <script src="Node.js"></script>
 </head>
 <body>
 
-<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
-<h2>Personal Expenses Bar Graph</h2>
+  <h2>Personal Expenses Bar Graph</h2>
+  <canvas id="myChart" style="width: 100%; max-width: 700px;"></canvas>
 
-<script>
+  <!-- Chart.js script remains unchanged -->
+  <script>
   fetch('https://docs.google.com/spreadsheets/d/1vaSaQd5wPhDfSk-YxBuhCJwjRwiMIWmsDznUvkwAaKE/edit#gid=0') // Replace with your actual web app URL
     .then(response => response.json())
     .then(data => {
