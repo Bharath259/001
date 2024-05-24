@@ -8,43 +8,38 @@
 </head>
 <body>
 
-<canvas id="myChart" style="width: 100%; max-width: 700px;"></canvas>
+<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+<h2>Personal Expenses Bar Graph</h2>
 
-
-  <h2>Personal Expenses Bar Graph</h2>
-  <canvas id="myChart" style="width: 100%; max-width: 700px;"></canvas>
-
-  <script>
-    const xValues = ["Food", "Bills", "Housing", "Transport", "Shopping", "Personal"];
-    const yValues = [300, 1000, 200, 150, 350, 500];
-
-    new Chart("myChart", {
-      type: "bar",
-      data: {
-        labels: xValues,
-        datasets: [
-          {
+<script>
+  fetch('https://docs.google.com/spreadsheets/d/1vaSaQd5wPhDfSk-YxBuhCJwjRwiMIWmsDznUvkwAaKE/edit#gid=0') // Replace with your actual web app URL
+    .then(response => response.json())
+    .then(data => {
+      const xValues = ["Food", "Bills", "Housing", "Transport", "Shopping", "Personal"];
+      const yValues = data[0]; // Assuming the data is in the first row
+      new Chart("myChart", {
+        type: "bar",
+        data: {
+          labels: xValues,
+          datasets: [{
             backgroundColor: "rgba(75, 192, 192, 0.6)",
-            data: yValues,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
+            data: yValues
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
               ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-        legend: {
-          display: false,
-        },
-      },
-    });
-  </script>
+                beginAtZero: true
+              }
+            }]
+          },
+          legend: { display: false }
+        }
+      });
+    })
+    .catch(error => console.error('Error:', error));
+</script>
 
 </body>
 </html>
