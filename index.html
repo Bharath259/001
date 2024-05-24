@@ -1,45 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Expenses Bar Graph</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<style>
+/* Base styles */
+h1, p, div {
+	text-align: center;
+}
+
+/* Styles for inputs and select elements */
+input[type="text"], input[type="date"], select, input[type="number"] {
+	width: 80%; /* Adjusted for better mobile responsiveness */
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+/* Styles for submit button */
+input[type="submit"] {
+	width: 80%; /* Adjusted for better mobile responsiveness */
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #45a049;
+}
+
+/* Container div styles */
+div {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 20px;
+}
+
+/* Media query for devices with width less than 600px */
+@media screen and (max-width: 600px) {
+	input[type="text"], input[type="date"], select, input[type="number"], input[type="submit"] {
+		width: 100%;
+	}
+}
+</style>
 </head>
 <body>
 
-  <h2>Personal Expenses Bar Graph</h2>
-  <canvas id="myChart" style="width: 100%; max-width: 700px;"></canvas>
+<div>
+	<h3>Test Expense Form</h3>
+	<form id="myForm" onsubmit="handleFormSubmit(this)">
+		<label for="hiring_date">Hiring Date</label>
+			<input type="date" class="form-control" id="hiring_date" name="hiring_date">
+			<br>
+		<label for="department">Category</label>
+		<select name="department" id="department">
+			<option value="Food">Food</option>
+			<option value="Bills">Bills</option>
+			<option value="Transport">Transport</option>
+			<option value="Personal">Personal</option>
+			<option value="Shopping">Shopping</option>
+		</select>
+		<br>
+		<label for="description">Description</label>
+		<input type="text" class="form-control" id="description" name="description" placeholder="Describe the expense...">
+		<br>
+		<label for="note">Note</label>
+		<input type="text" class="form-control" id="note" name="note" placeholder="Write your notes here...">
+		<br>
+		<label for="amount">Amount</label>
+		<input type="=number" class="form-control" id="amount" name="amount" placeholder="Enter the amount" value="=">
+		<br>
+		<input type="submit" value="Submit">
+	</form>
+	<p id="output"></p>
+</div>
 
-  <!-- Chart.js script remains unchanged -->
-  <script>
-  fetch('https://docs.google.com/spreadsheets/d/1vaSaQd5wPhDfSk-YxBuhCJwjRwiMIWmsDznUvkwAaKE/edit#gid=0') // Replace with your actual web app URL
-    .then(response => response.json())
-    .then(data => {
-      const xValues = ["Food", "Bills", "Housing", "Transport", "Shopping", "Personal"];
-      const yValues = data[A2, B2, C2, D2, E2, F2]; // Assuming the data is in the first row
-      new Chart("myChart", {
-        type: "bar",
-        data: {
-          labels: xValues,
-          datasets: [{
-            backgroundColor: "rgba(75, 192, 192, 0.6)",
-            data: yValues
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }]
-          },
-          legend: { display: false }
-        }
-      });
-    })
-    .catch(error => console.error('Error:', error));
+<script>
+function preventFormSubmit(){
+	var forms = document.querySelectorAll('form');
+	for (var i = 0; i < forms.length; i++){
+		forms[i].addEventListener('submit', function(event){
+			event.preventDefault();
+		});
+	}
+}
+window.addEventListener('load', preventFormSubmit);
+
+function handleFormSubmit(formObject){
+	google.script.run.processForm(formObject);
+	document.getElementById("myForm").reset();
+}
 </script>
 
 </body>
