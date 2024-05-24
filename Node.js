@@ -2,9 +2,9 @@ const { google } = require('googleapis');
 const keys = require('./keys.json');
 
 const client = new google.auth.JWT(
-  keys.client_email, 
-  null, 
-  keys.private_key, 
+  keys.client_email,
+  null,
+  keys.private_key,
   ['https://www.googleapis.com/auth/spreadsheets']
 );
 
@@ -21,7 +21,8 @@ client.authorize(function(err, tokens) {
 async function gsrun(cl) {
   const gsapi = google.sheets({ version: 'v4', auth: cl });
   const opt = {
-    spreadsheetId: 'https://docs.google.com/spreadsheets/d/1vaSaQd5wPhDfSk-YxBuhCJwjRwiMIWmsDznUvkwAaKE/edit?usp=sharing',
+    // Replace with your actual spreadsheet ID
+    spreadsheetId: '1vaSaQd5wPhDfSk-YxBuhCJwjRwiMIWmsDznUvkwAaKE', 
     range: 'Sheet1!A2:F2'
   };
 
