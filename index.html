@@ -7,11 +7,10 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Don't just watch, Subscribe!!!</h1>
+    <h1>Daily Expenses</h1>
 <div class="form-container">
 
-  <h2>Anatu Tech Youtube Channel Subscribers</h2>
-  <form id="myForm" action="https://script.google.com/macros/s/AKfycbysaJsANjitONi89Ul0mNeDCYHoeLFPtWsKieGWIncomejHuTHHcFYonhS9w-lz8tpA074g/exec" method="post">
+  <form id="myForm" action="https://script.google.com/macros/s/AKfycbxU3d_tRTayywpatMXaq5LqYU-lCXnc0W3cYA5H4bEjdNUnUNjYtYZHSRGFCYDjFK7jvw/exec" method="post">
 
       <label for="Categories">Select Categories:</label>
       <select id="Categories" name="Categories">
@@ -26,11 +25,15 @@
         <option value="Cashback">Cashback</option>
         <!-- Add more options here -->
       </select>
-      <label for="Amount">Amount:</label>
-      <input type="number" id="Amount" name="Amount" required>
-     
+
+        <label for="Description">Description:</label>
+      <textarea autocapitalize="word" type="text" id="Description" name="Description" required></textarea><br>
+      
       <label for="Note">Note:</label>
       <textarea autocapitalize="word" type="text" id="Note" name="Note" required></textarea><br>
+      <label for="Amount">Amount:</label>
+      <input type="number" id="Amount" name="Amount" required>
+      
     <input class="submitButton" type="submit" value="submit" />
   </form>
 </div>
