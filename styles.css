@@ -44,7 +44,26 @@ body {
     border: 1px solid #ccc;
     border-radius: 3px;
   }
-  
+  button {
+    background-color: #ff000043;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #ff0000;
+  }
+
+  .submitButton{
+    height:60px;
+    width: 200px;
+    border-radius: 10px;
+    background-color: green;
+    font-size: larger;
+    color: #fff;
+  }
 
   /* CSS for the modal */
 .modal {
@@ -119,4 +138,4 @@ details[open] summary {
   }
 
 
-  }
+    }
