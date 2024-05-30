@@ -41,8 +41,6 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
     };
     xhr.send(new FormData(this));
 });
-const SelectedDateInput = document.getElementById("SelectedDate");
-
 // Get today's date in YYYY-MM-DD format
 const today = new Date().toISOString().slice(0, 10);
 
