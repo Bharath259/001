@@ -1,11 +1,3 @@
-
-$(document).ready(function() {
-      $.get("/getData", function(data) {
-        $("#data").text(data);
-      });
-    });
-
-
 // Function to show the modal
 function showModal(message) {
     var modal = document.getElementById("myModal");
@@ -46,6 +38,15 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
           showModal("Error: Something went wrong."); // Show a generic error message
         }
       }
+      
     };
     xhr.send(new FormData(this));
 });
+
+$(document).ready(function() {
+      $.get("/getData", function(data) {
+        $("#data").text(data);
+      });
+    });
+
+
