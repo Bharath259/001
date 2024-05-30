@@ -41,8 +41,3 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
     };
     xhr.send(new FormData(this));
 });
-// Get today's date in YYYY-MM-DD format
-const today = new Date().toISOString().slice(0, 10);
-
-// Set the default value of the input to today's date
-SelectedDateInput.value = today;
