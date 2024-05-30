@@ -1,3 +1,11 @@
+
+$(document).ready(function() {
+      $.get("/getData", function(data) {
+        $("#data").text(data);
+      });
+    });
+
+
 // Function to show the modal
 function showModal(message) {
     var modal = document.getElementById("myModal");
