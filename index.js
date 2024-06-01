@@ -1,3 +1,19 @@
+
+var now = new Date();
+var y = now.getFullYear();
+var m = now.getMonth() + 1;
+var d = now.getDate();
+
+//月と日は0埋めを行う
+m = m < 10 ? "0" + m : m;
+d = d < 10 ? "0" + d : d;
+
+//yyyy-mm-dd形式
+document.querySelector("input[type=date]").value = y + "-" + m + "-" + d;
+
+
+
+
 // Function to show the modal
 function showModal(message) {
     var modal = document.getElementById("myModal");
