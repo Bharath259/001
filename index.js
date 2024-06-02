@@ -32,7 +32,7 @@ function showModal(message) {
     });
 }
 // Number Keypad 
-var inputEl = document.getElementById('tel');
+var inputEl = document.getElementById('Amount');
 var goodKey = '0123456789+ ';
 
 var checkInputTel = function(e) {
@@ -53,7 +53,7 @@ var filterInput = function(val) {
 }
 
 inputEl.addEventListener('input', checkInputTel);
-<input type='tel' id='tel' />
+<input type='tel' id='Amount' />
 
 
 // Add event listener to the form submission
