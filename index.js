@@ -31,29 +31,6 @@ function showModal(message) {
       modal.style.display = "none";
     });
 }
-// Number Keypad 
-var inputEl = document.getElementById('Amount');
-var goodKey = '0123456789+ ';
-
-var checkInputTel = function(e) {
-  var key = (typeof e.which == "number") ? e.which : e.keyCode;
-  var start = this.selectionStart,
-    end = this.selectionEnd;
-
-  var filtered = this.value.split('').filter(filterInput);
-  this.value = filtered.join("");
-
-  /* Prevents moving the pointer for a bad character */
-  var move = (filterInput(String.fromCharCode(key)) || (key == 0 || key == 8)) ? 0 : 1;
-  this.setSelectionRange(start - move, end - move);
-}
-
-var filterInput = function(val) {
-  return (goodKey.indexOf(val) > -1);
-}
-
-inputEl.addEventListener('input', checkInputTel);
-<input type='tel' id='Amount' />
 
 
 // Add event listener to the form submission
