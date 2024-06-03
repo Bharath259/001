@@ -1,84 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Expenses</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Password Hide // Show</title>
 </head>
 <body>
+    <div class="container">
+        <form id="passwordForm">
+            <div class="input-box">
+                <input type="password" spellcheck="false" required>
+                <label for="">Password</label>
+                <i class="uil uil-eye-slash toggle"></i>
+            </div>
+        </form>
+    </div>
 
-<h1>Daily Expenses</h1>
-  <p id="data"></p>
-<div class="form-container">
-  <form id="myForm" action="https://script.google.com/macros/s/AKfycbzWXL_l0oT6G_kzKX9UiFWOrRyutqfdbEHjDP_B5YyAZtuJr1MzCJCZS-Ebpjn7WYQpqw/exec" method="post">
-        <label for="Date">Date:</label>
-         <input type="date" id="Date" name="Date">
-    
-       <label for="Categories">Select Categories:</label>
-      <select id="Categories" name="Categories">
-        <option value="Food">Food</option>
-        <option value="Bills">Bills</option>
-        <option value="Housing">Housing</option>
-        <option value="Transports">Transports</option>
-        <option value="Shopping">Shopping</option>
-        <option value="Personal Discretionary">Personal Discretionary</option>
-        <option value="Income">Income</option>
-        <option value="Credit_Card">Credit_Card</option>
-        <option value="Cashback">Cashback</option>
-        <!-- Add more options here -->
-      </select>
+    <script>
+        const correctCode = "1234"; // Replace with your desired code
 
-        <label for="Description">Description:</label>
-      <textarea autocapitalize="word" type="text" id="Description" name="Description" required></textarea><br>
-      
-      <label for="Note">Note:</label>
-      <textarea autocapitalize="word" type="text" id="Note" name="Note"></textarea><br>
-      <label for="Amount">Amount:</label>
-      <input type="tel" id="Amount" name="Amount" value="=" />
-      
-    <input class="submitButton" type="submit" value="submit" />
-  </form>
-</div>
-<!-- Modal HTML -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p id="modalNote"></p>
-  </div>
-</div>
+        const toggle = document.querySelector(".toggle");
+        const input = document.querySelector("input");
 
-<!-- <div>
-  <textarea name="response" rows="10" cols="30" maxlength=”200”>
+        toggle.addEventListener("click", () => {
+            if (input.type === "password") {
+                input.type = "text";
+                toggle.classList.replace("uil-eye-slash", "uil-eye");
+            } else {
+                input.type = "password";
+            }
+        });
 
-  </textarea>
-</div> -->
-
-<!-- <div>
-  <details>
-    <summary>Details</summary>
-    Something small enough to escape casual notice.
-  </details>
-</div>
-
-<div>
-  <table style="color: aliceblue;">
-    <tr>
-        <td>Falafel</td>
-        <td>$10.00</td>
-    </tr>
-    <tr>
-        <td>Pasta Salad</td>
-        <td>$12.00</td>
-    </tr>
-    <tr>
-        <td>Dessert</td>
-        <td>$8.00</td>
-    </tr>
-</table>
-</div> -->
-
-<script src="index.js">
-</script>
+        document.getElementById("passwordForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const enteredCode = input.value;
+            if (enteredCode === correctCode) {
+                // Redirect to the next page (replace with your actual URL)
+                window.location.href = "index.html";
+            } else {
+                alert("Incorrect code. Please try again.");
+            }
+        });
+    </script>
 </body>
 </html>
