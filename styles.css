@@ -1,91 +1,60 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #000000;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  h1{
-    color: red;
-    font-size: 6vh;
-  }
-  .form-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 800px;
-    background-image: url(./man-wondering.jpg);
-  }
-
-  form {
-    width: 50%;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 10px;
-    color: #fff;
-  }
-
-  .form-group {
-    margin-bottom: 15px;
-  }
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  input[type="text"],
-  select {
-    width: 90%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  button {
-    background-color: #ff000043;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #ff0000;
-  }
-
-  .submitButton{
-    height:60px;
-    width: 200px;
-    border-radius: 10px;
-    background-color: green;
-    font-size: larger;
-    color: #fff;
-  }
-
-  /* CSS for the modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+/* Target the header element and set the background color to a light blue (#f0f8ff) */
+h1 {
+  background-color: #f0f8ff;
+  padding: 10px;
+  text-align: center;
 }
 
+/* Target the form container and add a border and some padding */
+.form-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px auto;
+  width: 50%;
+}
+
+/* Target the labels and style the font and add some margin */
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Target the input elements and style the border and width */
+input[type="text"],
+input[type="date"],
+textarea {
+  border: 1px solid #ccc;
+  width: 100%;
+  padding: 5px;
+}
+
+/* Target the select element and style the border and width */
+select {
+  border: 1px solid #ccc;
+  width: 100%;
+  padding: 5px;
+}
+
+/* Target the submit button and style the background color, text color, padding, and border */
+.submitButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Target the modal content and style the background color and padding */
 .modal-content {
-  background-color: white;
-  margin: 15% auto;
+  background-color: #fefefe;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  margin-bottom: 15px;
 }
 
+/* Target the close button and style the background color, text color, font size, and cursor */
 .close {
   color: #aaa;
   float: right;
@@ -100,42 +69,3 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
-
-
-details {
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  padding: 0.5em 0.5em 0;
-  color: #fff;
-}
-
-summary {
-  font-weight: bold;
-  margin: -0.5em -0.5em 0;
-  padding: 0.5em;
-}
-
-details[open] {
-  padding: 0.5em;
-}
-
-details[open] summary {
-  border-bottom: 1px solid #aaa;
-  margin-bottom: 0.5em;
-}
-
-/* Media queries for responsiveness */
-@media screen and (max-width: 768px) {
-    .form-container {
-    width: 100%;
-  }
-  form {
-    width: 98%;
-    background-position:left;
-  }
-  h1{
-    font-size: 4vh;
-  }
-
-}
-  
