@@ -1,49 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="password.css">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <title>Password Hide // Show</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom PIN Input</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .pin-container {
+      display: flex;
+    }
+    .pin-digit {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-size: 16px;
+      margin: 5px;
+      /* Hide actual characters, display asterisks */
+      -webkit-text-security: disc; /* Chrome, Safari */
+      text-security: circles; /* Firefox, Edge (shows circles by default, overridden) */
+    }
+    .pin-container.error {
+      border: 2px solid red;
+    }
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <form id="passwordForm">
-            <div class="input-box">
-                <input type="password" spellcheck="false" required>
-                <label for="">Password</label>
-                <i class="uil uil-eye-slash toggle"></i>
-            </div>
-        </form>
-    </div>
+  <div class="pin-container">
+    <input type="text" class="pin-digit" maxlength="1">
+    <input type="text" class="pin-digit" maxlength="1">
+    <input type="text" class="pin-digit" maxlength="1">
+    <input type="text" class="pin-digit" maxlength="1">
+  </div>
+  <br><p class="error-message"></p></br>
 
-    <script>
-        const correctCode = "1234"; // Replace with your desired code
+  <script>
+    const pinDigits = document.querySelectorAll('.pin-digit');
+    const errorMessage = document.querySelector('.error-message');
+    const correctPin = "1234"; // Replace with your desired PIN
+    const redirectUrl = "Form.html"; // Replace with the URL of the next page
 
-        const toggle = document.querySelector(".toggle");
-        const input = document.querySelector("input");
+    // Function to validate entered PIN
+    const validatePin = () => {
+      let enteredPin = "";
+      pinDigits.forEach(digit => enteredPin += digit.value);
 
-        toggle.addEventListener("click", () => {
-            if (input.type === "password") {
-                input.type = "password";
-                toggle.classList.replace("uil-eye-slash", "uil-eye");
-            } else {
-                input.type = "password";
-            }
-        });
+      if (enteredPin === correctPin) {
+        // PIN is correct, redirect to the next page
+        window.location.href = redirectUrl;
+      } else {
+        // PIN is incorrect, display error message
+        errorMessage.textContent = "Incorrect PIN. Please try again.";
+        const pinContainer = document.querySelector('.pin-container');
+        pinContainer.classList.add('error');
 
-        document.getElementById("passwordForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-            const enteredCode = input.value;
-            if (enteredCode === correctCode) {
-                // Redirect to the next page (replace with your actual URL)
-                window.location.href = "Form.html";
-            } else {
-                alert("Incorrect code. Please try again.");
-            }
-        });
-    </script>
+        // Clear error message and style after a few seconds
+        setTimeout(() => {
+          errorMessage.textContent = "";
+          pinContainer.classList.remove('error');
+        }, 2000);
+      }
+    };
+
+    pinDigits.forEach((digitInput, index) => {
+      digitInput.addEventListener('input', () => {
+        // Limit input to numbers
+        digitInput.value = digitInput.value.replace(/\D/g, '');
+
+        // Move focus to the next input on max character
+        if (digitInput.value.length === 1 && index < pinDigits.length - 1) {
+          pinDigits[index + 1].focus();
+        } else if (digitInput.value.length === 0 && index > 0) { // Move focus back on backspace
+          pinDigits[index - 1].focus();
+        }
+
+        // Clear subsequent inputs if backspacing beyond the first digit
+        if (digitInput.value.length === 0 && index === 0) {
+          for (let i = 1; i < pinDigits.length; i++) {
+            pinDigits[i].value = '';
+          }
+        }
+
+        // Validate PIN when all digits are entered
+        if (index === pinDigits.length - 1 && digitInput.value.length === 1) {
+          validatePin();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
