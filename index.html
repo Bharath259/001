@@ -39,10 +39,10 @@
 </head>
 <body>
   <div class="pin-container">
-    <input type="text" class="pin-digit" maxlength="1">
-    <input type="text" class="pin-digit" maxlength="1">
-    <input type="text" class="pin-digit" maxlength="1">
-    <input type="text" class="pin-digit" maxlength="1">
+    <input type="phone" class="pin-digit" maxlength="1" inputmode="numeric">
+    <input type="phone" class="pin-digit" maxlength="1" inputmode="numeric">
+    <input type="phone" class="pin-digit" maxlength="1" inputmode="numeric">
+    <input type="phone" class="pin-digit" maxlength="1" inputmode="numeric">
   </div>
   <br><p class="error-message"></p></br>
 
@@ -50,7 +50,7 @@
     const pinDigits = document.querySelectorAll('.pin-digit');
     const errorMessage = document.querySelector('.error-message');
     const correctPin = "1234"; // Replace with your desired PIN
-    const redirectUrl = "Form.html"; // Replace with the URL of the next page
+    const redirectUrl = "Form.html"; // Replace with your actual URL
 
     // Function to validate entered PIN
     const validatePin = () => {
