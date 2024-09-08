@@ -1,71 +1,131 @@
-/* Target the header element and set the background color to a light blue (#f0f8ff) */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
 h1 {
-  background-color: #f0f8ff;
-  padding: 10px;
-  text-align: center;
+    text-align: center;
+    color: #444;
+    margin-top: 20px;
 }
 
-/* Target the form container and add a border and some padding */
 .form-container {
-  border: 1px solid #ccc;
-  padding: 20px;
-  margin: 20px auto;
-  width: 50%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Target the labels and style the font and add some margin */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
 label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
-/* Target the input elements and style the border and width */
-input[type="text"],
-input[type="date"],
+input[type=date], textarea, input[type=tel] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
 textarea {
-  border: 1px solid #ccc;
-  width: 100%;
-  padding: 5px;
+    height: 60px;
+    resize: vertical;
 }
 
-/* Target the select element and style the border and width */
-select {
-  border: 1px solid #ccc;
-  width: 100%;
-  padding: 5px;
+input.error, textarea.error {
+    border-color: #e74c3c; /* Red border for error */
+    background-color: #fdd; /* Light red background for error */
 }
 
-/* Target the submit button and style the background color, text color, padding, and border */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
 .submitButton {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-/* Target the modal content and style the background color and padding */
+.submitButton:hover {
+    background-color: #45a049;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+}
+
 .modal-content {
-  background-color: #fefefe;
-  padding: 20px;
-  border: 1px solid #888;
-  margin-bottom: 15px;
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    text-align: center;
 }
 
-/* Target the close button and style the background color, text color, font size, and cursor */
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
