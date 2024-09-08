@@ -1,69 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Daily Expenses</h1>
+    <div class="form-container">
+        <form id="myForm" action="https://script.google.com/macros/s/AKfycbwNU5eSA6ckfPc6TgwL5IwrEU0pxXWZVI9YPjzZfgHV6uOrNt3NcMvrNeSoDWVxGz949Q/exec" method="post">
+            <label for="Date">Date:</label>
+            <input type="date" id="Date" name="Date" required aria-label="Date">
 
-var now = new Date();
-var y = now.getFullYear();
-var m = now.getMonth() + 1;
-var d = now.getDate();
+            <!-- Table Layout for Expenses -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ctg</th>
+                        <th>Description</th>
+                        <th>Note</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fod</td>
+                        <td><textarea id="Food_Description" name="Food_Description" aria-label="Food Description"></textarea></td>
+                        <td><textarea id="Food_Note" name="Food_Note" aria-label="Food Note"></textarea></td>
+                        <td><input type="tel" id="Food_Amount" name="Food_Amount" aria-label="Food Amount" placeholder="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Bls</td>
+                        <td><textarea id="Bills_Description" name="Bills_Description" aria-label="Bills Description"></textarea></td>
+                        <td><textarea id="Bills_Note" name="Bills_Note" aria-label="Bills Note"></textarea></td>
+                        <td><input type="tel" id="Bills_Amount" name="Bills_Amount" aria-label="Bills Amount" placeholder="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Hsg</td>
+                        <td><textarea id="Housing_Description" name="Housing_Description" aria-label="Housing Description"></textarea></td>
+                        <td><textarea id="Housing_Note" name="Housing_Note" aria-label="Housing Note"></textarea></td>
+                        <td><input type="tel" id="Housing_Amount" name="Housing_Amount" aria-label="Housing Amount" placeholder="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Tsp</td>
+                        <td><textarea id="Transports_Description" name="Transports_Description" aria-label="Transports Description"></textarea></td>
+                        <td><textarea id="Transports_Note" name="Transports_Note" aria-label="Transports Note"></textarea></td>
+                        <td><input type="tel" id="Transports_Amount" name="Transports_Amount" aria-label="Transports Amount" placeholder="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Spg</td>
+                        <td><textarea id="Shopping_Description" name="Shopping_Description" aria-label="Shopping Description"></textarea></td>
+                        <td><textarea id="Shopping_Note" name="Shopping_Note" aria-label="Shopping Note"></textarea></td>
+                        <td><input type="tel" id="Shopping_Amount" name="Shopping_Amount" aria-label="Shopping Amount" placeholder="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Prl</td>
+                        <td><textarea id="Personal_Discretionary_Description" name="Personal_Discretionary_Description" aria-label="Personal Discretionary Description"></textarea></td>
+                        <td><textarea id="Personal_Discretionary_Note" name="Personal_Discretionary_Note" aria-label="Personal Discretionary Note"></textarea></td>
+                        <td><input type="tel" id="Personal_Discretionary_Amount" name="Personal_Discretionary_Amount" aria-label="Personal Discretionary Amount" placeholder="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Inc</td>
+                        <td><textarea id="Income_Description" name="Income_Description" aria-label="Income Description"></textarea></td>
+                        <td><textarea id="Income_Note" name="Income_Note" aria-label="Income Note"></textarea></td>
+                        <td><input type="tel" id="Income_Amount" name="Income_Amount" aria-label="Income Amount" placeholder="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Crd</td>
+                        <td><textarea id="Credit_Card_Description" name="Credit_Card_Description" aria-label="Credit Card Description"></textarea></td>
+                        <td><textarea id="Credit_Card_Note" name="Credit_Card_Note" aria-label="Credit Card Note"></textarea></td>
+                        <td><input type="tel" id="Credit_Card_Amount" name="Credit_Card_Amount" aria-label="Credit Card Amount" placeholder="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Cbk</td>
+                        <td><textarea id="Cashback_Description" name="Cashback_Description" aria-label="Cashback Description"></textarea></td>
+                        <td><textarea id="Cashback_Note" name="Cashback_Note" aria-label="Cashback Note"></textarea></td>
+                        <td><input type="tel" id="Cashback_Amount" name="Cashback_Amount" aria-label="Cashback Amount" placeholder="0.00" step="0.01"></td>
+                    </tr>
+                </tbody>
+            </table>
 
-//月と日は0埋めを行う
-m = m < 10 ? "0" + m : m;
-d = d < 10 ? "0" + d : d;
+            <input class="submitButton" type="submit" value="Submit" />
+        </form>
+    </div>
 
-//yyyy-mm-dd形式
-document.querySelector("input[type=date]").value = y + "-" + m + "-" + d;
-
-
-
-
-// Function to show the modal
-function showModal(message) {
-    var modal = document.getElementById("myModal");
-    var modalNote = document.getElementById("modalNote"); // Corrected variable name
-
-    // Set the message in the modal
-    modalNote.textContent = message; // Corrected variable name
-
-    // Show the modal
-    modal.style.display = "block";
-
-    // Add event listener to close the modal when the close button is clicked
-    var closeButton = document.getElementsByClassName("close")[0];
-    closeButton.addEventListener("click", function() {
-      modal.style.display = "none";
-    });
-}
-
-
-// Add event listener to the form submission
-document.getElementById("myForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    // Show the modal immediately to indicate form submission is in progress
-    showModal("Submitting form...");
-
-    // Perform an AJAX request to submit the form
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", this.action);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          // Successful response
-          var response = xhr.responseText;
-          showModal(response); // Show the modal with the response message
-          document.getElementById("myForm").reset(); // Clear the form fields
-        } else {
-          // Error response
-          showModal("Error: Something went wrong."); // Show a generic error message
-        }
-      }
-      
-    };
-    xhr.send(new FormData(this));
-});
-
-$(document).ready(function() {
-      $.get("/getData", function(data) {
-        $("#data").text(data);
-      });
-    });
-
-
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modalNote"></p>
+        </div>
+    </div>
+    
+    <script src="form.js"></script>
+</body>
+</html>
