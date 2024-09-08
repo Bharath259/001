@@ -16,6 +16,11 @@
     }
     .pin-container {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .pin-inputs {
+      display: flex;
     }
     .pin-digit {
       width: 30px;
@@ -28,23 +33,25 @@
       -webkit-text-security: disc; /* Chrome, Safari */
       text-security: circles; /* Firefox, Edge (shows circles by default, overridden) */
     }
-    .pin-container.error {
+    .pin-container.error .pin-digit {
       border: 2px solid red;
     }
     .error-message {
       color: red;
-      margin-top: 10px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
   <div class="pin-container">
-    <input type="phone" class="pin-digit" maxlength="1" inputmode="numeric">
-    <input type="phone" class="pin-digit" maxlength="1" inputmode="numeric">
-    <input type="phone" class="pin-digit" maxlength="1" inputmode="numeric">
-    <input type="phone" class="pin-digit" maxlength="1" inputmode="numeric">
+    <p class="error-message"></p>
+    <div class="pin-inputs">
+      <input type="text" class="pin-digit" maxlength="1" inputmode="numeric">
+      <input type="text" class="pin-digit" maxlength="1" inputmode="numeric">
+      <input type="text" class="pin-digit" maxlength="1" inputmode="numeric">
+      <input type="text" class="pin-digit" maxlength="1" inputmode="numeric">
+    </div>
   </div>
-  <br><tr><p class="error-message"></p></tr></br>
 
   <script>
     const pinDigits = document.querySelectorAll('.pin-digit');
@@ -52,7 +59,6 @@
     const correctPin = "1234"; // Replace with your desired PIN
     const redirectUrl = "Form.html"; // Replace with your actual URL
 
-    // Function to validate entered PIN
     const validatePin = () => {
       let enteredPin = "";
       pinDigits.forEach(digit => enteredPin += digit.value);
@@ -82,20 +88,18 @@
         // Move focus to the next input on max character
         if (digitInput.value.length === 1 && index < pinDigits.length - 1) {
           pinDigits[index + 1].focus();
-        } else if (digitInput.value.length === 0 && index > 0) { // Move focus back on backspace
-          pinDigits[index - 1].focus();
-        }
-
-        // Clear subsequent inputs if backspacing beyond the first digit
-        if (digitInput.value.length === 0 && index === 0) {
-          for (let i = 1; i < pinDigits.length; i++) {
-            pinDigits[i].value = '';
-          }
         }
 
         // Validate PIN when all digits are entered
         if (index === pinDigits.length - 1 && digitInput.value.length === 1) {
           validatePin();
+        }
+      });
+
+      digitInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Backspace' && digitInput.value.length === 0 && index > 0) {
+          pinDigits[index - 1].focus();
+          pinDigits[index - 1].value = '';
         }
       });
     });
