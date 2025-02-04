@@ -93,8 +93,8 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
             if (xhr.status === 200) {
                 // Successful response
                 var response = xhr.responseText;
-                showModal(response); // Show the modal with the response message
                 document.getElementById("myForm").reset(); // Clear the form fields
+                showModal(response); // Show the modal with the response message
             } else {
                 // Error response
                 showModal("Error: Something went wrong."); // Show a generic error message
