@@ -1,11 +1,14 @@
-// Set today's date in the date input
 document.addEventListener('DOMContentLoaded', function() {
     var now = new Date();
     var y = now.getFullYear();
-    var m = now.getMonth() + 1;
+    var m = now.getMonth() + 1; // Month is 0-indexed, so we add 1
     var d = now.getDate();
+    
+    // Ensure months and days are two digits
     m = m < 10 ? "0" + m : m;
     d = d < 10 ? "0" + d : d;
+    
+    // Set the value of the date input to today's date in YYYY-MM-DD format
     document.querySelector("input[type=date]").value = y + "-" + m + "-" + d;
 });
 
