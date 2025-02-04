@@ -58,8 +58,6 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
         'Income',
         'Credit_Card',
         'Cashback'
-		'Invest'
-		'Returns'
     ];
 
     // Validate each category
@@ -95,8 +93,8 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
             if (xhr.status === 200) {
                 // Successful response
                 var response = xhr.responseText;
-                document.getElementById("myForm").reset(); // Clear the form fields
                 showModal(response); // Show the modal with the response message
+                document.getElementById("myForm").reset(); // Clear the form fields
             } else {
                 // Error response
                 showModal("Error: Something went wrong."); // Show a generic error message
