@@ -57,7 +57,7 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
         'Personal_Discretionary',
         'Income',
         'Credit_Card',
-        'Cashback'
+        'Cashback',
         'Invest'
     ];
 
