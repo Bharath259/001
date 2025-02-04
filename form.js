@@ -58,6 +58,8 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
         'Income',
         'Credit_Card',
         'Cashback'
+		'Invest'
+		'Returns'
     ];
 
     // Validate each category
