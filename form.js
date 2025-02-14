@@ -89,6 +89,8 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
 
   // Show the modal immediately to indicate form submission is in progress
   showModal("Submitting form...");
+    const redirectUrl = "Form.html"; // Replace with your actual URL
+
 
   // Perform an AJAX request to submit the form
   var xhr = new XMLHttpRequest();
@@ -115,7 +117,6 @@ document.querySelectorAll('.group-header').forEach(header => {
     const group = header.dataset.group;
     const arrow = header.querySelector('.arrow');
     const rows = document.querySelectorAll(`.${group}`);
-    const redirectUrl = "Form.html"; // Replace with your actual URL
 
             
     rows.forEach(row => {
