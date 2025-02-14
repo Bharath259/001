@@ -1,5 +1,5 @@
-// Set today's date in the date input
 document.addEventListener('DOMContentLoaded', function() {
+  // Set today's date in the date input
   var now = new Date();
   var y = now.getFullYear();
   var m = now.getMonth() + 1;
@@ -7,6 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
   m = m < 10 ? "0" + m : m;
   d = d < 10 ? "0" + d : d;
   document.querySelector("input[type=date]").value = y + "-" + m + "-" + d;
+
+  // Close all groups by default
+  document.querySelectorAll('.group-header').forEach(header => {
+    const group = header.dataset.group;
+    const rows = document.querySelectorAll(`.${group}`);
+    rows.forEach(row => {
+      row.classList.add('hidden');
+    });
+  });
 });
 
 // Function to show the modal
@@ -89,8 +98,6 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
 
   // Show the modal immediately to indicate form submission is in progress
   showModal("Submitting form...");
-  
-
 
   // Perform an AJAX request to submit the form
   var xhr = new XMLHttpRequest();
@@ -119,11 +126,10 @@ document.querySelectorAll('.group-header').forEach(header => {
     const arrow = header.querySelector('.arrow');
     const rows = document.querySelectorAll(`.${group}`);
 
-            
     rows.forEach(row => {
       row.classList.toggle('hidden');
     });
-    
+
     arrow.classList.toggle('rotate-up');
   });
 });
