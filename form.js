@@ -89,7 +89,7 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
 
   // Show the modal immediately to indicate form submission is in progress
   showModal("Submitting form...");
-    const redirectUrl = "Form.html"; // Replace with your actual URL
+  
 
 
   // Perform an AJAX request to submit the form
@@ -102,6 +102,7 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
         var response = xhr.responseText;
         showModal(response); // Show the modal with the response message
         document.getElementById("myForm").reset(); // Clear the form fields
+        window.location.href = "Dashboard.html";
       } else {
         // Error response
         showModal("Error: Something went wrong."); // Show a generic error message
