@@ -1,49 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
-  <!-- Include Chart.js from a CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets Data Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2a4d73;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #2a4d73;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        .error-message {
+            text-align: center;
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        // Replace with your Google Sheets ID and API key
+        const SHEET_ID = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA'; 
+        const API_KEY = 'AIzaSyBFnsLkiRlzmqT92gaSthwz9rPdeNquvA0'; 
+        const RANGE = 'Sheet2!A:E'; // Adjust the range as needed
+
+        function fetchSheetData() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const values = data.values;
+                    const table = document.getElementById('sheet-data');
+                    table.innerHTML = ''; // Clear existing table data
+
+                    // Create table headers
+                    const headerRow = document.createElement('tr');
+                    values[0].forEach(header => {
+                        const th = document.createElement('th');
+                        th.textContent = header;
+                        headerRow.appendChild(th);
+                    });
+                    table.appendChild(headerRow);
+
+                    // Create table rows
+                    for (let i = 1; i < values.length; i++) {
+                        const row = document.createElement('tr');
+                        values[i].forEach(cell => {
+                            const td = document.createElement('td');
+                            td.textContent = cell;
+                            row.appendChild(td);
+                        });
+                        table.appendChild(row);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('sheet-data').textContent = 'Error loading data';
+                });
+        }
+
+        // Fetch data initially and every 5 seconds
+        window.onload = function() {
+            fetchSheetData();
+            setInterval(fetchSheetData, 5000);
+        }
+    </script>
 </head>
 <body>
-  <h1>Expenses Dashboard</h1>
-  
-  <div class="dashboard-container">
-    <!-- Totals by Category -->
-    <div class="totals">
-      <h2>Category Totals</h2>
-      <ul>
-        <li>NEEDS: <span id="needsTotal">$0.00</span></li>
-        <li>WANTS: <span id="wantsTotal">$0.00</span></li>
-        <li>REVENUE: <span id="revenueTotal">$0.00</span></li>
-        <li>LIABILITIES: <span id="liabilitiesTotal">$0.00</span></li>
-        <li>SAVINGS & INVESTMENTS: <span id="savingsTotal">$0.00</span></li>
-      </ul>
+    <div>
+        <h1>Google Sheets Data:</h1>
+        <table id="sheet-data">
+            <!-- Data will be populated here -->
+        </table>
+        <p id="error-message" class="error-message"></p>
     </div>
-    
-    <!-- Summary Section -->
-    <div class="summary">
-      <h2>Summary</h2>
-      <p>Expenses: <span id="expensesTotal">$0.00</span></p>
-      <p>Revenue: <span id="totalRevenue">$0.00</span></p>
-      <p>Balance: <span id="balanceAmount">$0.00</span></p>
-    </div>
-    
-    <!-- Charts Section -->
-    <div class="charts">
-      <h2>Charts</h2>
-      <div class="chart-container">
-        <canvas id="pieChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <canvas id="barChart"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <script src="dashboard.js"></script>
 </body>
 </html>
