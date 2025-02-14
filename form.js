@@ -56,10 +56,13 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
         'Shopping',
         'Personal_Discretionary',
         'Income',
-        'Credit_Card',
         'Cashback',
+        'Credit_Card',
+        'Card_Bill',
         'Invest',
-        'Returns'        
+        'Returns',
+        'S&G',
+        'Debt'
     ];
 
     // Validate each category
