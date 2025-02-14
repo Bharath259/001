@@ -115,6 +115,8 @@ document.querySelectorAll('.group-header').forEach(header => {
     const group = header.dataset.group;
     const arrow = header.querySelector('.arrow');
     const rows = document.querySelectorAll(`.${group}`);
+    const redirectUrl = "Form.html"; // Replace with your actual URL
+
             
     rows.forEach(row => {
       row.classList.toggle('hidden');
