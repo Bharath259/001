@@ -150,5 +150,5 @@ tr:nth-child(even) {
 }
 
 .rotate-up {
-  transform: rotate(-90deg);
+  transform: rotate(90deg);
 }
