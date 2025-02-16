@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Password Popup</title>
+  <title>Custom PIN Input</title>
   <style>
     body {
       font-family: sans-serif;
@@ -12,104 +12,94 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      background-color: #f0f0f0;
     }
-
-    .popup-container {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-
-    .popup-container h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .password-inputs {
+    .pin-container {
       display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
+      flex-direction: column;
+      align-items: center;
     }
-
-    .password-digit {
+    .pin-inputs {
+      display: flex;
+    }
+    .pin-digit {
       width: 30px;
       height: 30px;
       border: 1px solid #ccc;
       text-align: center;
       font-size: 16px;
-      margin: 0 5px;
-      border-radius: 4px;
+      margin: 5px;
+      /* Hide actual characters, display asterisks */
       -webkit-text-security: disc; /* Chrome, Safari */
-      text-security: disc; /* Firefox, Edge */
+      text-security: circles; /* Firefox, Edge (shows circles by default, overridden) */
     }
-
+    .pin-container.error .pin-digit {
+      border: 2px solid red;
+    }
     .error-message {
       color: red;
-      margin-top: 10px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="popup-container">
-    <h2>Enter Password</h2>
-    <div class="password-inputs">
-      <input type="text" class="password-digit" maxlength="1" inputmode="numeric">
-      <input type="text" class="password-digit" maxlength="1" inputmode="numeric">
-      <input type="text" class="password-digit" maxlength="1" inputmode="numeric">
-      <input type="text" class="password-digit" maxlength="1" inputmode="numeric">
+  <div class="pin-container">
+    <tr></tr><p class="error-message"></p></tr>
+    <div class="pin-inputs">
+      <input type="text" class="pin-digit" maxlength="1" inputmode="numeric">
+      <input type="text" class="pin-digit" maxlength="1" inputmode="numeric">
+      <input type="text" class="pin-digit" maxlength="1" inputmode="numeric">
+      <input type="text" class="pin-digit" maxlength="1" inputmode="numeric">
     </div>
-    <p class="error-message"></p>
   </div>
 
   <script>
-    const passwordDigits = document.querySelectorAll('.password-digit');
+    const pinDigits = document.querySelectorAll('.pin-digit');
     const errorMessage = document.querySelector('.error-message');
-    const correctPassword = "1234"; // Replace with your desired password
+    const correctPin = "1234"; // Replace with your desired PIN
     const redirectUrl = "Form.html"; // Replace with your actual URL
 
-    const validatePassword = () => {
-      let enteredPassword = "";
-      passwordDigits.forEach(digit => enteredPassword += digit.value);
+    const validatePin = () => {
+      let enteredPin = "";
+      pinDigits.forEach(digit => enteredPin += digit.value);
 
-      if (enteredPassword === correctPassword) {
-        // Password is correct, redirect to the next page
+      if (enteredPin === correctPin) {
+        // PIN is correct, redirect to the next page
         window.location.href = redirectUrl;
       } else {
-        // Password is incorrect, display error message
-        errorMessage.textContent = "Incorrect password. Please try again.";
-        passwordDigits.forEach(digit => digit.classList.add('error'));
+        // PIN is incorrect, display error message
+        errorMessage.textContent = "Incorrect PIN. Please try again.";
+        const pinContainer = document.querySelector('.pin-container');
+        pinContainer.classList.add('error');
 
         // Clear error message and style after a few seconds
         setTimeout(() => {
           errorMessage.textContent = "";
-          passwordDigits.forEach(digit => digit.classList.remove('error'));
+          pinContainer.classList.remove('error');
         }, 2000);
       }
     };
 
-    passwordDigits.forEach((digitInput, index) => {
+    pinDigits.forEach((digitInput, index) => {
       digitInput.addEventListener('input', () => {
         // Limit input to numbers
         digitInput.value = digitInput.value.replace(/\D/g, '');
 
         // Move focus to the next input on max character
-        if (digitInput.value.length === 1 && index < passwordDigits.length - 1) {
-          passwordDigits[index + 1].focus();
+        if (digitInput.value.length === 1 && index < pinDigits.length - 1) {
+          pinDigits[index + 1].focus();
         }
 
-        // Validate password when all digits are entered
-        if (index === passwordDigits.length - 1 && digitInput.value.length === 1) {
-          validatePassword();
+        // Validate PIN when all digits are entered
+        if (index === pinDigits.length - 1 && digitInput.value.length === 1) {
+          validatePin();
         }
       });
 
       digitInput.addEventListener('keydown', (event) => {
         if (event.key === 'Backspace' && digitInput.value.length === 0 && index > 0) {
-          passwordDigits[index - 1].focus();
-          passwordDigits[index - 1].value = '';
+          pinDigits[index - 1].focus();
+          pinDigits[index - 1].value = '';
         }
       });
     });
