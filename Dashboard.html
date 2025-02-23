@@ -73,6 +73,24 @@
                             td.style.fontStyle = 'italic';
                         }
 
+                        // Apply borders (approximation)
+                        td.style.border = '1px solid #ddd'; // Default border
+                        if (cell.effectiveFormat?.borders) {
+                            const borders = cell.effectiveFormat.borders;
+                            if (borders.top) {
+                                td.style.borderTop = `${borders.top.style} ${borders.top.width}px ${getBorderColor(borders.top.color)}`;
+                            }
+                            if (borders.bottom) {
+                                td.style.borderBottom = `${borders.bottom.style} ${borders.bottom.width}px ${getBorderColor(borders.bottom.color)}`;
+                            }
+                            if (borders.left) {
+                                td.style.borderLeft = `${borders.left.style} ${borders.left.width}px ${getBorderColor(borders.left.color)}`;
+                            }
+                            if (borders.right) {
+                                td.style.borderRight = `${borders.right.style} ${borders.right.width}px ${getBorderColor(borders.right.color)}`;
+                            }
+                        }
+
                         tr.appendChild(td);
                     });
                 }
@@ -81,6 +99,14 @@
             });
 
             output.appendChild(table);
+        }
+
+        // Helper function to get border color
+        function getBorderColor(color) {
+            if (color) {
+                return `rgb(${color.red * 255}, ${color.green * 255}, ${color.blue * 255})`;
+            }
+            return '#000'; // Default border color
         }
 
         // Automatically fetch data when the page loads
