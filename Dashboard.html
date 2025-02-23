@@ -3,37 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Data Fetching</title>
+    <title>Google Sheets Data with Formatting</title>
     <style>
         table {
-            width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        table, th, td {
-            border: 1px solid black;
-        }
         th, td {
             padding: 10px;
-            text-align: left;
+            border: 1px solid #ddd;
         }
     </style>
     <script>
-        // Automatically fetch data when the page loads
-        window.onload = async function fetchData() {
-            const apiKey = 'AIzaSyBFnsLkiRlzmqT92gaSthwz9rPdeNquvA0'; // Replace with your Google Sheets API key
-            const spreadsheetId = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA'; // Replace with your Google Sheets ID
-            const sheetName = 'CT'; // Replace with your sheet name
-            const cellReference = 'A:H'; // Replace with your cell reference
+        const apiKey = 'AIzaSyBFnsLkiRlzmqT92gaSthwz9rPdeNquvA0'; // Replace with your Google Sheets API key
+        const spreadsheetId = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA'; // Replace with your Google Sheets ID
+        const sheetName = 'CT'; // Replace with your sheet name
 
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}!${cellReference}?key=${apiKey}`;
+        // Fetch data and formatting from Google Sheets
+        async function fetchDataAndFormatting() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?includeGridData=true&key=${apiKey}`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
 
-                if (data.values) {
-                    displayDataAsTable(data.values);
+                if (data.sheets && data.sheets.length > 0) {
+                    const sheet = data.sheets.find(s => s.properties.title === sheetName);
+                    if (sheet) {
+                        displayDataWithFormatting(sheet);
+                    } else {
+                        document.getElementById('output').innerText = 'Sheet not found';
+                    }
                 } else {
                     document.getElementById('output').innerText = 'No data found';
                 }
@@ -43,33 +43,68 @@
             }
         }
 
-        function displayDataAsTable(data) {
+        // Display data with formatting
+        function displayDataWithFormatting(sheet) {
             const output = document.getElementById('output');
             output.innerHTML = ''; // Clear previous content
 
-            // Create a table element
             const table = document.createElement('table');
 
-            // Loop through the data and create table rows
-            data.forEach((row, rowIndex) => {
+            // Get the grid data (rows and columns)
+            const gridData = sheet.data[0].rowData;
+
+            gridData.forEach((row, rowIndex) => {
                 const tr = document.createElement('tr');
 
-                row.forEach((cell) => {
-                    const td = document.createElement('td');
-                    td.textContent = cell;
-                    tr.appendChild(td);
-                });
+                if (row.values) {
+                    row.values.forEach((cell, colIndex) => {
+                        const td = document.createElement('td');
+
+                        // Set cell content
+                        td.textContent = cell.formattedValue || '';
+
+                        // Apply background color
+                        if (cell.effectiveFormat?.backgroundColor) {
+                            const bgColor = cell.effectiveFormat.backgroundColor;
+                            td.style.backgroundColor = `rgb(${bgColor.red * 255}, ${bgColor.green * 255}, ${bgColor.blue * 255})`;
+                        }
+
+                        // Apply font color
+                        if (cell.effectiveFormat?.textFormat?.foregroundColor) {
+                            const fontColor = cell.effectiveFormat.textFormat.foregroundColor;
+                            td.style.color = `rgb(${fontColor.red * 255}, ${fontColor.green * 255}, ${fontColor.blue * 255})`;
+                        }
+
+                        // Apply font style (bold, italic, etc.)
+                        if (cell.effectiveFormat?.textFormat?.bold) {
+                            td.style.fontWeight = 'bold';
+                        }
+                        if (cell.effectiveFormat?.textFormat?.italic) {
+                            td.style.fontStyle = 'italic';
+                        }
+
+                        // Set cell width and height
+                        const colWidth = sheet.data[0].columnMetadata[colIndex]?.pixelSize || 100;
+                        const rowHeight = row.effectiveFormat?.pixelSize || 20;
+                        td.style.width = `${colWidth}px`;
+                        td.style.height = `${rowHeight}px`;
+
+                        tr.appendChild(td);
+                    });
+                }
 
                 table.appendChild(tr);
             });
 
-            // Append the table to the output div
             output.appendChild(table);
         }
+
+        // Automatically fetch data when the page loads
+        window.onload = fetchDataAndFormatting;
     </script>
 </head>
 <body>
-    <h1>Google Sheets Data Fetching</h1>
+    <h1>Google Sheets Data with Formatting</h1>
     <div id="output">Loading data...</div>
 </body>
 </html>
