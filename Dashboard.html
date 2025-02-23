@@ -4,16 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sheets Data with Formatting</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-    </style>
     <script>
         const apiKey = 'AIzaSyBFnsLkiRlzmqT92gaSthwz9rPdeNquvA0'; // Replace with your Google Sheets API key
         const spreadsheetId = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA'; // Replace with your Google Sheets ID
@@ -83,12 +73,6 @@
                             td.style.fontStyle = 'italic';
                         }
 
-                        // Set cell width and height
-                        const colWidth = sheet.data[0].columnMetadata[colIndex]?.pixelSize || 100;
-                        const rowHeight = row.effectiveFormat?.pixelSize || 20;
-                        td.style.width = `${colWidth}px`;
-                        td.style.height = `${rowHeight}px`;
-
                         tr.appendChild(td);
                     });
                 }
@@ -102,7 +86,7 @@
         // Automatically fetch data when the page loads
         window.onload = function () {
             fetchDataAndFormatting(); // Fetch data immediately
-            setInterval(fetchDataAndFormatting, 5000); // Fetch data every 5 seconds
+            setInterval(fetchDataAndFormatting, 2000); // Fetch data every 5 seconds
         };
     </script>
 </head>
