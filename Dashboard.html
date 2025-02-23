@@ -3,88 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Data Display with Formatting</title>
+    <title>Google Sheets Data Display</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2a4d73;
+        }
+
         table {
+            width: 80%;
             border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
+            margin-top: 20px;
+            background-color: #fff;
             border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
         th {
-            background-color: #f2f2f2;
+            background-color: #2a4d73;
+            color: white;
+            font-weight: bold;
         }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
         .error-message {
+            text-align: center;
             color: red;
+            font-size: 18px;
+            font-weight: bold;
         }
     </style>
     <script>
         // Replace with your Google Sheets ID and API key
         const SHEET_ID = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA'; 
         const API_KEY = 'AIzaSyBFnsLkiRlzmqT92gaSthwz9rPdeNquvA0'; 
-        const RANGE = 'CT!A:E'; // Adjust the range as needed
+        const RANGE = 'Sheet2!A:E'; // Adjust the range as needed
 
         function fetchSheetData() {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}?ranges=${RANGE}&fields=sheets.data.rowData.values.userEnteredValue,sheets.data.rowData.values.userEnteredFormat&key=${API_KEY}`;
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
             
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    const values = data.sheets[0].data[0].rowData;
+                    const values = data.values;
                     const table = document.getElementById('sheet-data');
                     table.innerHTML = ''; // Clear existing table data
 
                     // Create table headers
                     const headerRow = document.createElement('tr');
-                    values[0].values.forEach(cell => {
+                    values[0].forEach(header => {
                         const th = document.createElement('th');
-                        th.textContent = cell.userEnteredValue ? cell.userEnteredValue.stringValue : '';
+                        th.textContent = header;
                         headerRow.appendChild(th);
                     });
                     table.appendChild(headerRow);
 
-                    // Create table rows with formatting
+                    // Create table rows
                     for (let i = 1; i < values.length; i++) {
                         const row = document.createElement('tr');
-                        values[i].values.forEach((cell, index) => {
+                        values[i].forEach(cell => {
                             const td = document.createElement('td');
-                            td.textContent = cell.userEnteredValue ? cell.userEnteredValue.stringValue : '';
-
-                            // Apply Google Sheets cell formatting (background color, text color, font style)
-                            const format = values[i].values[index].userEnteredFormat;
-                            if (format) {
-                                // Background color
-                                if (format.backgroundColor) {
-                                    td.style.backgroundColor = `rgb(${format.backgroundColor.red * 255}, ${format.backgroundColor.green * 255}, ${format.backgroundColor.blue * 255})`;
-                                }
-
-                                // Text color
-                                if (format.textFormat && format.textFormat.foregroundColor) {
-                                    td.style.color = `rgb(${format.textFormat.foregroundColor.red * 255}, ${format.textFormat.foregroundColor.green * 255}, ${format.textFormat.foregroundColor.blue * 255})`;
-                                }
-
-                                // Font style (bold, italic, etc.)
-                                if (format.textFormat) {
-                                    if (format.textFormat.bold) {
-                                        td.style.fontWeight = 'bold';
-                                    }
-                                    if (format.textFormat.italic) {
-                                        td.style.fontStyle = 'italic';
-                                    }
-                                    if (format.textFormat.underline) {
-                                        td.style.textDecoration = 'underline';
-                                    }
-                                }
-
-                                // Text alignment (left, center, right)
-                                if (format.horizontalAlignment) {
-                                    td.style.textAlign = format.horizontalAlignment.toLowerCase();
-                                }
-                            }
-
+                            td.textContent = cell;
                             row.appendChild(td);
                         });
                         table.appendChild(row);
