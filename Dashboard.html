@@ -100,7 +100,10 @@
         }
 
         // Automatically fetch data when the page loads
-        window.onload = fetchDataAndFormatting;
+        window.onload = function () {
+            fetchDataAndFormatting(); // Fetch data immediately
+            setInterval(fetchDataAndFormatting, 5000); // Fetch data every 5 seconds
+        };
     </script>
 </head>
 <body>
