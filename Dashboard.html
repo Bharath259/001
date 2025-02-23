@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Data Display with Styles</title>
+    <title>Google Sheets Data Display with Formatting</title>
     <style>
         table {
             border-collapse: collapse;
@@ -53,14 +53,35 @@
                             const td = document.createElement('td');
                             td.textContent = cell.userEnteredValue ? cell.userEnteredValue.stringValue : '';
 
-                            // Check and apply formatting (background color, text color)
+                            // Apply Google Sheets cell formatting (background color, text color, font style)
                             const format = values[i].values[index].userEnteredFormat;
                             if (format) {
+                                // Background color
                                 if (format.backgroundColor) {
                                     td.style.backgroundColor = `rgb(${format.backgroundColor.red * 255}, ${format.backgroundColor.green * 255}, ${format.backgroundColor.blue * 255})`;
                                 }
+
+                                // Text color
                                 if (format.textFormat && format.textFormat.foregroundColor) {
                                     td.style.color = `rgb(${format.textFormat.foregroundColor.red * 255}, ${format.textFormat.foregroundColor.green * 255}, ${format.textFormat.foregroundColor.blue * 255})`;
+                                }
+
+                                // Font style (bold, italic, etc.)
+                                if (format.textFormat) {
+                                    if (format.textFormat.bold) {
+                                        td.style.fontWeight = 'bold';
+                                    }
+                                    if (format.textFormat.italic) {
+                                        td.style.fontStyle = 'italic';
+                                    }
+                                    if (format.textFormat.underline) {
+                                        td.style.textDecoration = 'underline';
+                                    }
+                                }
+
+                                // Text alignment (left, center, right)
+                                if (format.horizontalAlignment) {
+                                    td.style.textAlign = format.horizontalAlignment.toLowerCase();
                                 }
                             }
 
