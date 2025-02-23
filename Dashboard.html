@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sheets Data Fetching</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
     <script>
-        async function fetchData() {
+        // Automatically fetch data when the page loads
+        window.onload = async function fetchData() {
             const apiKey = 'AIzaSyBFnsLkiRlzmqT92gaSthwz9rPdeNquvA0'; // Replace with your Google Sheets API key
             const spreadsheetId = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA'; // Replace with your Google Sheets ID
             const sheetName = 'CT'; // Replace with your sheet name
@@ -18,7 +33,7 @@
                 const data = await response.json();
 
                 if (data.values) {
-                    document.getElementById('output').innerText = data.values[0][0];
+                    displayDataAsTable(data.values);
                 } else {
                     document.getElementById('output').innerText = 'No data found';
                 }
@@ -27,11 +42,34 @@
                 document.getElementById('output').innerText = 'Error fetching data';
             }
         }
+
+        function displayDataAsTable(data) {
+            const output = document.getElementById('output');
+            output.innerHTML = ''; // Clear previous content
+
+            // Create a table element
+            const table = document.createElement('table');
+
+            // Loop through the data and create table rows
+            data.forEach((row, rowIndex) => {
+                const tr = document.createElement('tr');
+
+                row.forEach((cell) => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+
+                table.appendChild(tr);
+            });
+
+            // Append the table to the output div
+            output.appendChild(table);
+        }
     </script>
 </head>
 <body>
     <h1>Google Sheets Data Fetching</h1>
-    <button onclick="fetchData()">Fetch Data</button>
-    <p>Data from Google Sheet: <span id="output"></span></p>
+    <div id="output">Loading data...</div>
 </body>
 </html>
