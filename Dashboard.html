@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Data Display</title>
+    <title>Google Sheets Data Display with Styles</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
     <script>
         // Replace with your Google Sheets ID and API key
         const SHEET_ID = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA'; 
@@ -11,30 +28,42 @@
         const RANGE = 'CT!A:E'; // Adjust the range as needed
 
         function fetchSheetData() {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}?ranges=${RANGE}&fields=sheets.data.rowData.values.userEnteredValue,sheets.data.rowData.values.userEnteredFormat&key=${API_KEY}`;
             
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    const values = data.values;
+                    const values = data.sheets[0].data[0].rowData;
                     const table = document.getElementById('sheet-data');
                     table.innerHTML = ''; // Clear existing table data
 
                     // Create table headers
                     const headerRow = document.createElement('tr');
-                    values[0].forEach(header => {
+                    values[0].values.forEach(cell => {
                         const th = document.createElement('th');
-                        th.textContent = header;
+                        th.textContent = cell.userEnteredValue ? cell.userEnteredValue.stringValue : '';
                         headerRow.appendChild(th);
                     });
                     table.appendChild(headerRow);
 
-                    // Create table rows
+                    // Create table rows with formatting
                     for (let i = 1; i < values.length; i++) {
                         const row = document.createElement('tr');
-                        values[i].forEach(cell => {
+                        values[i].values.forEach((cell, index) => {
                             const td = document.createElement('td');
-                            td.textContent = cell;
+                            td.textContent = cell.userEnteredValue ? cell.userEnteredValue.stringValue : '';
+
+                            // Check and apply formatting (background color, text color)
+                            const format = values[i].values[index].userEnteredFormat;
+                            if (format) {
+                                if (format.backgroundColor) {
+                                    td.style.backgroundColor = `rgb(${format.backgroundColor.red * 255}, ${format.backgroundColor.green * 255}, ${format.backgroundColor.blue * 255})`;
+                                }
+                                if (format.textFormat && format.textFormat.foregroundColor) {
+                                    td.style.color = `rgb(${format.textFormat.foregroundColor.red * 255}, ${format.textFormat.foregroundColor.green * 255}, ${format.textFormat.foregroundColor.blue * 255})`;
+                                }
+                            }
+
                             row.appendChild(td);
                         });
                         table.appendChild(row);
