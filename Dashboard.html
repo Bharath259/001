@@ -3,122 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Data Display</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        h1 {
-            text-align: center;
-            color: #2a4d73;
-        }
-
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #2a4d73;
-            color: white;
-            font-weight: bold;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-            cursor: pointer;
-        }
-
-        td {
-            font-size: 14px;
-        }
-
-        .error-message {
-            text-align: center;
-            color: red;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
+    <title>Google Sheets Data Fetching</title>
     <script>
-        // Replace with your Google Sheets ID and API key
-        const SHEET_ID = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA'; 
-        const API_KEY = 'AIzaSyBFnsLkiRlzmqT92gaSthwz9rPdeNquvA0'; 
-        const RANGE = 'CT!A:H'; // Adjust the range as needed
+        async function fetchData() {
+            const apiKey = 'AIzaSyBFnsLkiRlzmqT92gaSthwz9rPdeNquvA0'; // Replace with your Google Sheets API key
+            const spreadsheetId = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA'; // Replace with your Google Sheets ID
+            const sheetName = 'CT'; // Replace with your sheet name
+            const cellReference = 'A:H'; // Replace with your cell reference
 
-        function fetchSheetData() {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
-            
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    const values = data.values;
-                    const table = document.getElementById('sheet-data');
-                    table.innerHTML = ''; // Clear existing table data
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}!${cellReference}?key=${apiKey}`;
 
-                    // Create table headers
-                    const headerRow = document.createElement('tr');
-                    values[0].forEach(header => {
-                        const th = document.createElement('th');
-                        th.textContent = header;
-                        headerRow.appendChild(th);
-                    });
-                    table.appendChild(headerRow);
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
 
-                    // Create table rows
-                    for (let i = 1; i < values.length; i++) {
-                        const row = document.createElement('tr');
-                        values[i].forEach(cell => {
-                            const td = document.createElement('td');
-                            td.textContent = cell;
-                            row.appendChild(td);
-                        });
-                        table.appendChild(row);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('sheet-data').textContent = 'Error loading data';
-                });
-        }
-
-        // Fetch data initially and every 5 seconds
-        window.onload = function() {
-            fetchSheetData();
-            setInterval(fetchSheetData, 5000);
+                if (data.values) {
+                    document.getElementById('output').innerText = data.values[0][0];
+                } else {
+                    document.getElementById('output').innerText = 'No data found';
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('output').innerText = 'Error fetching data';
+            }
         }
     </script>
 </head>
 <body>
-    <div>
-        <h1>Google Sheets Data:</h1>
-        <table id="sheet-data">
-            <!-- Data will be populated here -->
-        </table>
-        <p id="error-message" class="error-message"></p>
-    </div>
+    <h1>Google Sheets Data Fetching</h1>
+    <button onclick="fetchData()">Fetch Data</button>
+    <p>Data from Google Sheet: <span id="output"></span></p>
 </body>
 </html>
