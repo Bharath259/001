@@ -18,6 +18,17 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+// Function to toggle favorite status when a button is clicked
+function toggleFavorite(btn) {
+  var hiddenInput = btn.nextElementSibling;
+  if (hiddenInput && hiddenInput.type === "hidden") {
+    hiddenInput.value = "true";
+    btn.classList.add("favorite-selected");
+    // Optionally disable the button after marking as favorite
+    btn.disabled = true;
+  }
+}
+
 // Function to show the modal
 function showModal(message) {
   var modal = document.getElementById("myModal");
@@ -71,7 +82,10 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
     'Invest',
     'Returns',
     'S&G',
-    'Debt'
+    'Debt',
+	'OC-Revenue',
+	'OC-Savings',
+	'OC-Liabilities'
   ];
 
   // Validate each category
@@ -119,7 +133,7 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
   xhr.send(formData);
 });
 
-// Add toggle functionality
+// Add toggle functionality for group headers
 document.querySelectorAll('.group-header').forEach(header => {
   header.addEventListener('click', () => {
     const group = header.dataset.group;
