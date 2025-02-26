@@ -46,8 +46,8 @@ textarea {
 }
 
 input.error, textarea.error {
-  border-color: #e74c3c; /* Red border for error */
-  background-color: #fdd; /* Light red background for error */
+  border-color: #e74c3c;
+  background-color: #fdd;
 }
 
 table {
@@ -151,4 +151,21 @@ tr:nth-child(even) {
 
 .rotate-up {
   transform: rotate(90deg);
+}
+
+/* New styles for favorite buttons */
+.fav-btn {
+  padding: 5px 10px;
+  border: none;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.fav-btn:hover {
+  background-color: #ccc;
+}
+
+.fav-btn.favorite-selected {
+  background-color: gold;
+  color: black;
 }
