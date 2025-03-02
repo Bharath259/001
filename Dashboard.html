@@ -44,6 +44,7 @@
     const SHEET_ID = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA';
     const SHEET_NAME = 'CT';
     const URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}?includeGridData=true&key=${API_KEY}`;
+    const REFRESH_INTERVAL = 60000; // 60 seconds
 
     // --- Fetch Google Sheet Data ---
     async function fetchSheetData() {
@@ -65,6 +66,8 @@
         const merges = sheet.merges || [];
         const columnMetadata = gridData.columnMetadata;
         renderTable(gridData, merges, columnMetadata);
+        // Hide any previous error message on successful fetch
+        document.getElementById('errorMessage').style.display = 'none';
       } catch (error) {
         document.getElementById('errorMessage').textContent = error.message;
         document.getElementById('errorMessage').style.display = 'block';
@@ -75,6 +78,8 @@
     // --- Render Table with Merged Cells ---
     function renderTable(gridData, merges, columnMetadata) {
       const table = document.getElementById('sheetTable');
+      // Clear existing content
+      table.innerHTML = '';
       const { rowData } = gridData || {};
       if (!rowData) return;
 
@@ -104,7 +109,6 @@
 
           const cellElement = document.createElement('td');
           cellElement.textContent = cell.formattedValue || '';
-
           // If the cell is the start of a merged range, set rowSpan/colSpan.
           if (mergedCellsMap.has(`${rowIndex}-${colIndex}`)) {
             const mergeData = mergedCellsMap.get(`${rowIndex}-${colIndex}`);
@@ -154,12 +158,13 @@
       return `rgb(${red}, ${green}, ${blue})`;
     }
 
-    // --- Initiate Data Fetch ---
+    // --- Initiate Data Fetch & Auto Refresh ---
     fetchSheetData();
+    setInterval(fetchSheetData, REFRESH_INTERVAL);
 
-    // --- Test Cases --- 
-    // You can add more test cases by manipulating the URL or by simulating error responses.
-    // For example, try using an invalid sheet ID or API key to see if the error message displays properly.
+    // --- Additional Test Cases --- 
+    // 1. Try modifying the API_KEY or SHEET_ID to an invalid value to see if the error message displays.
+    // 2. Resize your browser window to see if the table adjusts its layout for mobile devices.
   </script>
 </body>
 </html>
