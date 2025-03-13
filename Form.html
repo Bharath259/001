@@ -127,7 +127,7 @@
               <button type="button" class="fav-btn" data-category="Credit_Card" onclick="toggleFavorite(this)">CCP</button>
               <input type="hidden" name="Credit_Card_Favorite" value="false">
             </td>
-            <td><textarea id="Credit_Card_Description" name="Credit_Card_Description" aria-label="Credit Card Description"></textarea></td>
+            <td><input type="tel" id="Credit_Card_Description" name="Credit_Card_Description" aria-label="Credit Card Description" pattern="[0-9]{4}" maxlength="4" placeholder="0000" inputmode="numeric" required</td>
             <td><textarea id="Credit_Card_Note" name="Credit_Card_Note" aria-label="Credit Card Note"></textarea></td>
             <td><input type="tel" id="Credit_Card_Amount" name="Credit_Card_Amount" aria-label="Credit Card Amount" placeholder="0.00" step="0.01"></td>
           </tr>
@@ -136,7 +136,7 @@
               <button type="button" class="fav-btn" data-category="Card_Bill" onclick="toggleFavorite(this)">CCB</button>
               <input type="hidden" name="Card_Bill_Favorite" value="false">
             </td>
-            <td><textarea id="Card_Bill_Description" name="Card_Bill_Description" aria-label="Card Bill Description"></textarea></td>
+            <td><input type="tel" id="Card_Bill_Description" name="Card_Bill_Description" aria-label="Card Bill Description" pattern="[0-9]{4}" maxlength="4" placeholder="0000" inputmode="numeric" required</td>
             <td><textarea id="Card_Bill_Note" name="Card_Bill_Note" aria-label="Card Bill Note"></textarea></td>
             <td><input type="tel" id="Card_Bill_Amount" name="Card_Bill_Amount" aria-label="Card Bill Amount" placeholder="0.00" step="0.01"></td>
           </tr>
