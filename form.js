@@ -83,9 +83,9 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
     'Returns',
     'S&G',
     'Debt',
-	'OC-Revenue',
-	'OC-Savings',
-	'OC-Liabilities'
+    'OC-Revenue',
+    'OC-Savings',
+    'OC-Liabilities'
   ];
 
   // Validate each category
