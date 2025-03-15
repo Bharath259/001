@@ -35,7 +35,57 @@
 </head>
 <body>
   <h2>Google Sheets Data</h2>
+  <!-- Audit Controls: Date picker, DONE checkbox, and POST button -->
+<div id="auditControls" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+  <input type="date" id="auditDate" />
+  <label>
+    <input type="checkbox" id="auditCheckbox" /> DONE
+  </label>
+  <button id="auditPostButton">POST</button>
+  <span id="auditStatus" style="font-weight: bold;"></span>
+</div>
+
+<script>
+  // Set the date picker's value to today's date (format: yyyy-mm-dd)
+  document.addEventListener('DOMContentLoaded', function() {
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById('auditDate').value = today;
+  });
+
+  // Replace with your deployed Google Apps Script URL that handles posting data
+  const GS_POST_URL = 'https://script.google.com/macros/s/AKfycbwqlRxyc4e8jE6kr5iRntkB9x2lSPYjzpFbft5dxCByi3O56u5dr1lIfhwhzGXvSIJMkg/exec';
+
+  document.getElementById('auditPostButton').addEventListener('click', async function() {
+    var auditDate = document.getElementById('auditDate').value;
+    var isDone = document.getElementById('auditCheckbox').checked;
+    var statusElem = document.getElementById('auditStatus');
+
+    if (!isDone) {
+      statusElem.textContent = "Please check DONE to post.";
+      return;
+    }
+    
+    // Build the form data to send to GS with action=postDone
+    var formData = new FormData();
+    formData.append('action', 'postDone');
+    formData.append('Date', auditDate);
+
+    try {
+      const response = await fetch(GS_POST_URL, {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.text();
+      statusElem.textContent = result;
+    } catch (err) {
+      statusElem.textContent = "Error posting DONE message.";
+      console.error(err);
+    }
+  });
+</script>
+
   <p id="errorMessage" style="color: red; display: none;"></p>
+
   <table id="sheetTable"></table>
 
   <script>
@@ -44,7 +94,7 @@
     const SHEET_ID = '1r7CI_sQ2VvD9XHbkzVkq6jwlpj5TgeWLUrU2nzkrnOA';
     const SHEET_NAME = 'CT';
     const URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}?includeGridData=true&key=${API_KEY}`;
-    const REFRESH_INTERVAL = 60000; // 60 seconds
+    const REFRESH_INTERVAL = 2000; // 60 seconds
 
     // --- Fetch Google Sheet Data ---
     async function fetchSheetData() {
