@@ -72,17 +72,38 @@ th {
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 400px; /* Adjust width as needed */
+  margin: 20px auto;
+}
 
-.submitButton {
-  background-color: #4CAF50;
+.editButton {
+  background-color: #ff0000;
   color: white;
   border: none;
   padding: 15px 20px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  background-color: #cc0000;
+}
+
+.submitButton {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 15px 140px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
 }
